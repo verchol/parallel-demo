@@ -4,7 +4,7 @@ const ProgressBar = require('progress');
 
 const progress = (_.toNumber(process.env.PROGRESS) || 80)%101
 console.log(`the progress is ${progress}`);
-const settings = process.env.PROGRESS_SETTINGS || ":bar"
+const settings = process.env.PROGRESS_SETTINGS || ":percent"
 var bar = new ProgressBar(settings, { total: progress });
 var timer = setInterval(function () {
   bar.tick();
