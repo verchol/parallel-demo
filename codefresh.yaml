@@ -1,0 +1,32 @@
+version: '1.0'
+steps:
+  before_parallel:
+    image: alpine
+    commands : 
+      - echo 'before parallel'
+
+  parallel_build:
+    type: parallel
+    steps:
+      build:
+        type: build
+        title: Step Title
+        description: Free text description
+        dockerfile: ./Dockerfile
+        image_name: codefresh-io/demo
+        tag: ${{CF_SHORT_REVISION}}
+        fail_fast: false
+      push:
+        type: push
+        title: building imagte ${{build}}
+        description: Free text description
+        candidate: ${{build}}
+        tag: latest
+        image_name: codefresh-io/demo
+        registry: olegazure
+        fail_fast: false
+
+  after_parallel:
+      image: alpine
+      commands : 
+        - echo 'after parallel'
